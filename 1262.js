@@ -7,7 +7,7 @@
  * @param {number[]} nums
  * @return {number}
  */
-var maxSumDivThree = function(nums) {
+var maxSumDivThree1 = function(nums) {
   let sum = 0;
   const arr1 = [];
   const arr2 = [];
@@ -80,4 +80,29 @@ var maxSumDivThree = function(nums) {
   }
 };
 
-console.log(maxSumDivThree([2, 6, 2, 2, 7]));
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSumDivThree = function(nums) {
+  const k = 3;
+  const dp = [];
+  nums.forEach((num, ind) => {
+    if (ind === 0) {
+      dp[ind] = [0, 0, 0];
+      dp[ind][num % k] = num;
+    } else {
+      dp[ind] = [...dp[ind - 1]];
+      for (let i = 0; i < k; ++i) {
+        const newNum = dp[ind - 1][i] + num;
+        const mod = newNum % 3;
+        dp[ind][mod] = Math.max(dp[ind][mod], newNum);
+      }
+    }
+  });
+  //   console.log('dp', dp);
+  return dp[nums.length - 1][0];
+};
+
+console.log(maxSumDivThree([3, 6, 5, 1, 8]));
