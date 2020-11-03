@@ -88,19 +88,16 @@ var maxSumDivThree1 = function(nums) {
 var maxSumDivThree = function(nums) {
   const k = 3;
   const dp = [];
-  nums.forEach((num, ind) => {
-    if (ind === 0) {
-      dp[ind] = [0, 0, 0];
-      dp[ind][num % k] = num;
-    } else {
-      dp[ind] = [...dp[ind - 1]];
-      for (let i = 0; i < k; ++i) {
-        const newNum = dp[ind - 1][i] + num;
-        const mod = newNum % 3;
-        dp[ind][mod] = Math.max(dp[ind][mod], newNum);
-      }
+  dp[0] = [0, 0, 0];
+  dp[0][nums[0] % k] = nums[0];
+  for (let i = 1; i < nums.length; ++i) {
+    dp[i] = [...dp[i - 1]];
+    for (let j = 0; j < k; ++j) {
+      const newNum = dp[i - 1][j] + nums[i];
+      const mod = newNum % k;
+      dp[i][mod] = Math.max(dp[i][mod], newNum);
     }
-  });
+  }
   //   console.log('dp', dp);
   return dp[nums.length - 1][0];
 };
