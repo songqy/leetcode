@@ -48,18 +48,19 @@
  * @return {number}
  */
 var majorityElement = function (nums) {
-  if (nums.length === 1) return nums[0];
-  const cache = {};
+  let num;
+  let count = 0;
   for (let i = 0; i < nums.length; ++i) {
-    if (cache[nums[i]]) {
-      cache[nums[i]]++;
-      if (cache[nums[i]] > nums.length / 2) {
-        return nums[i];
-      }
+    if (count === 0) {
+      num = nums[i];
+      count = 1;
+    } else if (num === nums[i]) {
+      count++;
     } else {
-      cache[nums[i]] = 1;
+      count--;
     }
   }
+  return num;
 };
 // @lc code=end
 
